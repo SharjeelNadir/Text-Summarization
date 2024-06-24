@@ -47,7 +47,8 @@ In the `main.ipynb` notebook, the following steps are carried out:
 3. Create a Database on MySqWorkbench and make tables
 4. Once Database is made make Front pages
 5. Now run **app.py** by writing python app.py
-   Once this all is done you have succesfully trained ,saved and connect the model to the front end using Flask
+
+Once this all is done you have succesfully trained ,saved and connect the model to the front end using Flask
    
 
 ## References
