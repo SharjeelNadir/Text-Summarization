@@ -4,6 +4,7 @@ import re
 import mysql.connector
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Required for session management
 
 # MySQL database connection
 connection = mysql.connector.connect(
@@ -57,10 +58,11 @@ def login():
         user = cursor.fetchone()
         
         if user:
+            session['username'] = username  # Store the username in session
             return redirect('/index')
         else:
             error = 'Incorrect username or password'
-            return render_template('index.html', error=error)
+            return render_template('login.html', error=error)
     
     return render_template('login.html')
 
@@ -80,6 +82,11 @@ def signup():
 
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    if 'username' not in session:
+        return redirect('/')
+    
+    summary = None
+    text = None
     if request.method == 'POST':
         text = request.form['text']
         
@@ -89,15 +96,17 @@ def index():
         # Summarize the preprocessed text
         summary = summarize(preprocessed_text)
         
-        # Store summary in the database (example)
-        # Replace with your actual database logic
+        # Store summary in the database
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO summaries (user_id, summary) VALUES (%s, %s)", ("user_id_placeholder", summary))
+        cursor.execute("INSERT INTO summaries (username, summary) VALUES (%s, %s)", (session['username'], summary))
         connection.commit()
         
-        return render_template('index.html', text=text, summary=summary)
+    # Retrieve previous summaries for the logged-in user
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT summary FROM summaries WHERE username = %s", (session['username'],))
+    summaries = cursor.fetchall()
     
-    return render_template('index.html')
+    return render_template('index.html', text=text, summary=summary, summaries=summaries)
 
 if __name__ == '__main__':
     app.run(debug=True)
