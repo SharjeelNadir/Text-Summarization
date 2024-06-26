@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summarization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #ffffff00;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+        form {
+            text-align: center;
+        }
+        textarea {
+            width: 95%;
+            height: 200px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #cccccc85;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #26a8c0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #4568a0;
+        }
+        .output {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-wrap: break-word;
+            width: 100%;
+        }
+        .output h2 {
+            margin-top: 0;
+            color: white;
+        }
+        .output p {
+            margin-bottom: 0;
+            line-height: 1.6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Summarization</h1>
+        <form action="/index" method="POST">
+            <textarea id="textInput" name="text" rows="10" placeholder="Enter text to summarize..."></textarea><br><br>
+            <input type="submit" value="Summarize">
+        </form>
+        <div class="output" id="output" style="{{ 'display: block;' if summary else 'display: none;' }}">
+            <h2>Original Text:</h2>
+            <p id="originalText">{{ text }}</p>
+            <h3> </h3>
+            <h2>Summarized Text:</h2>
+            <p id="summaryText">{{ summary }}</p>
+        </div>
+        <div class="output" id="previousSummaries">
+            <h2>Previous Summaries:</h2>
+            {% for s in summaries %}
+                <p>{{ s['summary'] }}</p>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
