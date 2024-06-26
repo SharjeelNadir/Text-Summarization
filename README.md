@@ -13,7 +13,8 @@ This project is a web application designed to summarize articles. It combines we
 - **app.py**: Main application file developed using Streamlit or Flask.
 - **main.ipynb**: Jupyter notebook for data exploration, preprocessing, and model fine-tuning.
 - **project.pdf**: Detailed project instructions and requirements.
-
+- 
+-**Database Connection**:Database used is MySQLworkbench 
 ## Instructions
 
 ### Data Exploration and Preparation
