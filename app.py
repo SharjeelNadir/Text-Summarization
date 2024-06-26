@@ -4,14 +4,13 @@ import re
 import mysql.connector
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Required for session management
 
 # MySQL database connection
 connection = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="Sharjeel0302",
-    database="kddlab"
+    password="your_database_password",
+    database="name_of_database"
 )
 
 # Load the fine-tuned model and tokenizer
